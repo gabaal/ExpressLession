@@ -1,24 +1,67 @@
 import express from "express";
-import bodyParser from "body-parser";
+
 const app = express();
 app.use(express.json());
-// routes
+// your routes will go here...
 
 app.listen(3000, () => {
-  console.log("server is running on port 3000");
+  console.log("Server is listening on port 3000...");
 });
-
 app.get("/", (req, res) => {
-  res.json({ message: "Route rout" });
+  res.send("hello world");
 });
-app.get("/messages", (req, res) => {
-  res.json({ message: "Route messages rooot" });
+// POST method route
+app.post("/", (req, res) => {
+  res.send("POST request to the homepage");
 });
 
-app.post("/messages", (req, res) => {
-  const body = req.body;
-  res.json({ message: body });
-  // const { num1, num2 } = req.body;
-  // const result = num1 + num2;
-  // res.json({ message: num1 + " + " + num2 + "= " + result });
+app.get("/messages", (req, res) => {
+  res.json({ message: "Hello GET, World!" });
 });
+
+app.post("/messages/add/:num1/:num2", (req, res) => {
+  // parameters seen as strings so transform to integers
+  const num1 = parseInt(req.params.num1);
+  const num2 = parseInt(req.params.num2);
+  // perform the calculation
+  const total = num1 + num2;
+  // return the message and total
+  res.json({
+    message: num1 + ` plus ` + num2 + ` = ` + total,
+  });
+});
+app.post("/messages/subtract/:num1/:num2", (req, res) => {
+  // parameters seen as strings so transform to integers
+  const num1 = parseInt(req.params.num1);
+  const num2 = parseInt(req.params.num2);
+  // perform the calculation
+  const total = num1 - num2;
+  // return the message and total
+  res.json({
+    message: num1 + ` minus ` + num2 + ` = ` + total,
+  });
+});
+app.post("/messages/divide/:num1/:num2", (req, res) => {
+  // parameters seen as strings so transform to integers
+  const num1 = parseInt(req.params.num1);
+  const num2 = parseInt(req.params.num2);
+  // perform the calculation
+  const total = num1 / num2;
+  // return the message and total
+  res.json({
+    message: num1 + ` divided by ` + num2 + ` = ` + total,
+  });
+});
+app.post("/messages/multiply/:num1/:num2", (req, res) => {
+  // parameters seen as strings so transform to integers
+  const num1 = parseInt(req.params.num1);
+  const num2 = parseInt(req.params.num2);
+  // perform the calculation
+  const total = num1 * num2;
+  // return the message and total
+  res.json({
+    message: num1 + ` multiplied by ` + num2 + ` = ` + total,
+  });
+});
+
+//remember to re-start server  node server.js
